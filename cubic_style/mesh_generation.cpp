@@ -84,8 +84,8 @@ void mesh_generation::func(figure* fig, glm::ivec3 _side)
 		{
 			for (int k = 0; k < size_block.z; k++)
 			{
-				f = 32*test.octaveNoise0_1((float)(i + _side.x) / 64, (float)(j + _side.y) / 64, (float)(k + _side.z) / 64, 8) - 16;
-				//f = pow(i + _side.x, 2) + pow(j + _side.y, 2) + pow(k + _side.z, 2) - 512;
+				f = 32*test.octaveNoise0_1((float)(i + _side.x) / 96, (float)(j + _side.y) / 96, (float)(k + _side.z) / 96, 16) - 16;
+				//f = pow(i + _side.x, 2) + pow(j + _side.y, 2) + pow(k + _side.z, 2) - 4000;
 				if (f < 0)
 				{
 					matrix_3d[i][j][k].point_position = true;
@@ -483,7 +483,7 @@ void mesh_generation::func_thr(glm::ivec3 _size_block, glm::ivec3 _side, glm::iv
 		{
 			for (int k = 0; k < _size.z; k++)
 			{
-				if ((i + j * _size.x) / _n_thr == _x)
+				if ((i + (j + k*_size.y)*_size.x) % _n_thr == _x)
 				{
 					figure fig;
 					glm::ivec3 side;
