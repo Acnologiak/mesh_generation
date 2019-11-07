@@ -4,8 +4,8 @@
 #include <thread>
 #include <atomic>
 #include <iostream>
+#include <mutex>
 #include "glm/glm.hpp"
-
 
 
 struct figure
@@ -27,28 +27,28 @@ struct point_matrix
 class mesh_generation
 {
 public:
-	mesh_generation();
+	mesh_generation(glm::ivec3 _size_block);
 	~mesh_generation();
 
-	//генерація меша
-	bool m_gen(figure &fig, glm::ivec3 p1, glm::ivec3 p2, int _number_thr);
-private:
-	glm::ivec3 size;
-	glm::ivec3 side;
-
-	std::atomic_int status = 0;
-	std::atomic_int number_thr_complete = 0;
-
-	point_matrix ***matrix_3d;
-
-	void pause_thr_func(int _number_thr);
-	//функція потоку
-	void thr_func(int _number_thr, int x);
-	//функція генерації
-	void func(int _number_thr, int x);
-	//створення матриці
+	void gen_mesh(figure *fig, glm::ivec3 _side);
+	void gen_mesh_thr(figure* fig, glm::ivec3 _side, glm::ivec3 _size, int _n_thr);
 	void create_matrix();
-	//видалення матриці
 	void delete_matrix();
+private:
+	glm::ivec3 size_block;
+	std::atomic_int compl_thr = 0;
+	std::atomic_int n_points = 0;
+	std::mutex lock_fig;
+
+	point_matrix*** matrix_3d;
+	figure* base_fig;
+
+	void func(figure* fig, glm::ivec3 _side);
+	void check_points(figure* fig, glm::ivec3 _side);
+	void check_polygons(figure* fig);
+	void func_thr(glm::ivec3 _size_block, glm::ivec3 _side, glm::ivec3 _size, int _n_thr, int _x);
 };
 
+/*
+Даний код працює зі сторонами які кратні 32 коректно 
+*/

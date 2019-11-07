@@ -24,9 +24,15 @@
     <ClCompile Include="perlin_noise.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="file_obj.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mesh_generation.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="file_obj.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
