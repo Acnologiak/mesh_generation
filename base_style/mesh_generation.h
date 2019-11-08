@@ -24,6 +24,13 @@ struct point_matrix
 };
 
 
+struct edge
+{
+	float value;
+	int n;
+};
+
+
 class mesh_generation
 {
 public:
@@ -32,19 +39,36 @@ public:
 
 	void gen_mesh(figure *fig, glm::ivec3 _side);
 	void gen_mesh_thr(figure* fig, glm::ivec3 _side, glm::ivec3 _size, int _n_thr);
-	void create_matrix();
-	void delete_matrix();
+	void create_points_matrix();
+	void delete_points_matrix();
+	void create_edges_matrix();
+	void delete_edges_matrix();
 private:
 	glm::ivec3 size_block;
 	std::atomic_int compl_thr = 0;
 	std::atomic_int n_points = 0;
 	std::mutex lock_fig;
 
-	point_matrix*** matrix_3d;
+	bool*** matrix_3d;
+	edge*** edges_OY;
+	edge*** edges_OX;
+	edge*** edges_OZ;
+
+	float alpha = 0.1f;
+
 	figure* base_fig;
 
-	void func(figure* fig, glm::ivec3 _side);
+	void filling_matrix(figure* fig, glm::ivec3 _side);
 	void check_points(figure* fig, glm::ivec3 _side);
 	void check_polygons(figure* fig);
 	void func_thr(glm::ivec3 _size_block, glm::ivec3 _side, glm::ivec3 _size, int _n_thr, int _x);
 };
+
+
+float func(float _x, float _y, float _z);
+
+float m_func_x(float _x1, float _x2, float _y, float _z, float alpha);
+
+float m_func_y(float _x, float _y1, float _y2, float _z, float alpha);
+
+float m_func_z(float _x, float _y, float _z1, float _z2, float alpha);

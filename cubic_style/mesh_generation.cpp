@@ -46,10 +46,10 @@ void mesh_generation::gen_mesh_thr(figure* fig, glm::ivec3 _side, glm::ivec3 _si
 void mesh_generation::create_matrix()
 {
 	point_matrix** matrix_2d;
-	matrix_3d = new point_matrix * *[size_block.x];
+	matrix_3d = new point_matrix **[size_block.x];
 	for (int i = 0; i < size_block.x; i++)
 	{
-		matrix_2d = new point_matrix * [size_block.y];
+		matrix_2d = new point_matrix*[size_block.y];
 		for (int j = 0; j < size_block.y; j++)
 		{
 			matrix_2d[j] = new point_matrix[size_block.z];
